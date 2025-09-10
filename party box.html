@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Party Box Friends</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      min-height: 100vh;
+      padding: 20px 10px;
+      color: #fff;
+      overflow-x: hidden;
+    }
+    
+    .container {
+      max-width: 450px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border-radius: 30px;
+      padding: 30px 25px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+      animation: shimmer 3s infinite;
+      pointer-events: none;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .title {
+      font-size: 28px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 15px;
+      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .price-card {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+      padding: 18px;
+      border-radius: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 15px 30px rgba(238, 90, 36, 0.4);
+      transform: translateY(0);
+      transition: transform 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .price-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    
+    .price-card:hover {
+      transform: translateY(-3px);
+    }
+    
+    .price-label {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    
+    .price-amount {
+      font-size: 32px;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .subtitle {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 30px;
+      font-weight: 400;
+    }
+    
+    .friends-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    
+    .friend-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 15px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      min-height: 100px;
+      cursor: pointer;
+    }
+    
+    .friend-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .friend-btn:hover::before {
+      left: 100%;
+    }
+    
+    .friend-btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      background: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .friend-btn:active {
+      transform: translateY(-2px) scale(1.02);
+    }
+    
+    .friend-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+    
+    .friend-name {
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      letter-spacing: 0.5px;
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .footer-text {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 400;
+    }
+    
+    /* Animations */
+    .friend-btn {
+      animation: fadeInUp 0.6s ease-out forwards;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    
+    .friend-btn:nth-child(1) { animation-delay: 0.1s; }
+    .friend-btn:nth-child(2) { animation-delay: 0.2s; }
+    .friend-btn:nth-child(3) { animation-delay: 0.3s; }
+    .friend-btn:nth-child(4) { animation-delay: 0.4s; }
+    .friend-btn:nth-child(5) { animation-delay: 0.5s; }
+    .friend-btn:nth-child(6) { animation-delay: 0.6s; }
+    .friend-btn:nth-child(7) { animation-delay: 0.7s; }
+    .friend-btn:nth-child(8) { animation-delay: 0.8s; }
+    .friend-btn:nth-child(9) { animation-delay: 0.9s; }
+    .friend-btn:nth-child(10) { animation-delay: 1.0s; }
+    
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .header-animation {
+      animation: slideDown 0.8s ease-out;
+    }
+    
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Mobile optimizations */
+    @media (max-width: 480px) {
+      .container {
+        margin: 10px;
+        padding: 25px 20px;
+        border-radius: 25px;
+      }
+      
+      .title {
+        font-size: 24px;
+      }
+      
+      .price-amount {
+        font-size: 28px;
+      }
+      
+      .friends-grid {
+        gap: 10px;
+      }
+      
+      .friend-btn {
+        padding: 18px 12px;
+        min-height: 90px;
+        font-size: 15px;
+      }
+      
+      .friend-icon {
+        font-size: 24px;
+        margin-bottom: 6px;
+      }
+    }
+    
+    /* Extra small screens */
+    @media (max-width: 360px) {
+      body {
+        padding: 15px 8px;
+      }
+      
+      .container {
+        padding: 20px 15px;
+      }
+      
+      .title {
+        font-size: 22px;
+      }
+      
+      .price-amount {
+        font-size: 26px;
+      }
+      
+      .friend-btn {
+        padding: 15px 10px;
+        min-height: 85px;
+        font-size: 14px;
+      }
+    }
+    
+    /* Landscape mode on mobile */
+    @media (max-height: 600px) and (orientation: landscape) {
+      .container {
+        max-width: 90%;
+        padding: 20px;
+      }
+      
+      .friends-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+      }
+      
+      .friend-btn {
+        min-height: 70px;
+        padding: 12px 8px;
+        font-size: 13px;
+      }
+      
+      .friend-icon {
+        font-size: 20px;
+        margin-bottom: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header header-animation">
+      <h1 class="title">🎉 Party Box Friends</h1>
+      <div class="price-card">
+        <div class="price-label">Total Party Box Price</div>
+        <div class="price-amount">Rs. 25,000</div>
+      </div>
+      <p class="subtitle">Select a friend to view their payments</p>
+    </div>
+    
+    <div class="friends-grid">
+      <a href="chathuranga.html" class="friend-btn">
+        <div class="friend-icon">👨‍💼</div>
+        <div class="friend-name">Chathuranga</div>
+      </a>
+      
+      <a href="dilum.html" class="friend-btn">
+        <div class="friend-icon">🧑‍</div>
+        <div class="friend-name">Dilum</div>
+      </a>
+      
+      <a href="thilini.html" class="friend-btn">
+        <div class="friend-icon">👩‍🎨</div>
+        <div class="friend-name">Thilini</div>
+      </a>
+      
+      <a href="malshani.html" class="friend-btn">
+        <div class="friend-icon">👩‍🔬</div>
+        <div class="friend-name">Malshani</div>
+      </a>
+      
+      <a href="theshala.html" class="friend-btn">
+        <div class="friend-icon">👩‍💼‍</div>
+        <div class="friend-name">Theshala</div>
+      </a>
+      
+      <a href="sandaru.html" class="friend-btn">
+        <div class="friend-icon">👨‍🚀</div>
+        <div class="friend-name">Sandaru</div>
+      </a>
+      
+      <a href="savindu.html" class="friend-btn">
+        <div class="friend-icon">🧑‍</div>
+        <div class="friend-name">Savindu</div>
+      </a>
+      
+      <a href="gayan.html" class="friend-btn">
+        <div class="friend-icon">👨‍</div>
+        <div class="friend-name">Gayan</div>
+      </a>
+      
+      <a href="malaka.html" class="friend-btn">
+        <div class="friend-icon">🧑‍</div>
+        <div class="friend-name">Malaka</div>
+      </a>
+      
+      <a href="ishini.html" class="friend-btn">
+        <div class="friend-icon">👩‍💼</div>
+        <div class="friend-name">Ishini</div>
+      </a>
+    </div>
+    
+    <div class="footer">
+      <p class="footer-text">Track everyone's contributions to the party!</p>
+    </div>
+  </div>
+</body>
+</html>
