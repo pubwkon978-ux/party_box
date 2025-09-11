@@ -311,10 +311,6 @@
     // Load data when page loads
     loadData();
     
-    // Add pull-to-refresh functionality
-    let startY = 0;
-    let isPulling = false;
-    
     document.addEventListener('touchstart', (e) => {
       startY = e.touches[0].pageY;
       isPulling = window.pageYOffset === 0;
@@ -353,3 +349,4 @@
   </script>
 </body>
 </html>
+
