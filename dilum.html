@@ -3,14 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dilum - Party Box Payments</title>
+  <title>Dilum ‒ Party Box Payments</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-    
+    html, body {
+      overscroll-behavior: none;
+      /* disable pull-to-refresh / overscroll refresh on some browsers */
+    }
     body {
       font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -18,7 +21,7 @@
       padding: 10px;
       color: #fff;
     }
-    
+
     .container {
       max-width: 400px;
       margin: 0 auto;
@@ -29,12 +32,12 @@
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
-    
+
     .header {
       text-align: center;
       margin-bottom: 25px;
     }
-    
+
     .title {
       font-size: 24px;
       font-weight: 700;
@@ -42,7 +45,7 @@
       margin-bottom: 10px;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
-    
+
     .total-card {
       background: linear-gradient(135deg, #ff6b6b, #ee5a24);
       padding: 20px;
@@ -53,43 +56,43 @@
       transform: translateY(0);
       transition: transform 0.3s ease;
     }
-    
+
     .total-card:hover {
       transform: translateY(-5px);
     }
-    
+
     .total-label {
       font-size: 14px;
       opacity: 0.9;
       margin-bottom: 8px;
     }
-    
+
     .total-amount {
       font-size: 32px;
       font-weight: 800;
       color: #fff;
     }
-    
+
     .records-container {
       max-height: 60vh;
       overflow-y: auto;
       padding-right: 5px;
     }
-    
+
     .records-container::-webkit-scrollbar {
       width: 4px;
     }
-    
+
     .records-container::-webkit-scrollbar-track {
       background: rgba(255, 255, 255, 0.1);
       border-radius: 10px;
     }
-    
+
     .records-container::-webkit-scrollbar-thumb {
       background: rgba(255, 255, 255, 0.3);
       border-radius: 10px;
     }
-    
+
     .record-card {
       background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(10px);
@@ -101,7 +104,7 @@
       position: relative;
       overflow: hidden;
     }
-    
+
     .record-card::before {
       content: '';
       position: absolute;
@@ -112,19 +115,19 @@
       background: linear-gradient(180deg, #00d2ff, #3a7bd5);
       border-radius: 0 2px 2px 0;
     }
-    
+
     .record-card:hover {
       transform: translateX(5px);
       background: rgba(255, 255, 255, 0.2);
     }
-    
+
     .record-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 8px;
     }
-    
+
     .record-number {
       background: rgba(255, 255, 255, 0.2);
       padding: 6px 12px;
@@ -133,26 +136,26 @@
       font-weight: 600;
       color: #fff;
     }
-    
+
     .record-amount {
       font-size: 20px;
       font-weight: 700;
       color: #00ff88;
       text-shadow: 0 2px 4px rgba(0, 255, 136, 0.3);
     }
-    
+
     .record-month {
       font-size: 14px;
       color: rgba(255, 255, 255, 0.8);
       margin-top: 5px;
     }
-    
+
     .loading {
       text-align: center;
       padding: 40px;
       color: rgba(255, 255, 255, 0.8);
     }
-    
+
     .loading-spinner {
       width: 40px;
       height: 40px;
@@ -162,12 +165,12 @@
       animation: spin 1s linear infinite;
       margin: 0 auto 15px;
     }
-    
+
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-    
+
     .error {
       background: linear-gradient(135deg, #ff4757, #c44569);
       padding: 20px;
@@ -175,11 +178,11 @@
       text-align: center;
       color: #fff;
     }
-    
+
     .success-animation {
       animation: slideIn 0.5s ease-out;
     }
-    
+
     @keyframes slideIn {
       from {
         opacity: 0;
@@ -190,39 +193,35 @@
         transform: translateY(0);
       }
     }
-    
+
     .no-data {
       text-align: center;
       padding: 40px;
       color: rgba(255, 255, 255, 0.6);
     }
-    
+
     /* Extra small screens */
     @media (max-width: 360px) {
       .container {
         padding: 20px;
         margin: 5px;
       }
-      
       .title {
         font-size: 20px;
       }
-      
       .total-amount {
         font-size: 28px;
       }
-      
       .record-card {
         padding: 15px;
       }
     }
-    
+
     /* Landscape orientation on mobile */
     @media (max-height: 500px) and (orientation: landscape) {
       .container {
         max-width: 90%;
       }
-      
       .records-container {
         max-height: 40vh;
       }
@@ -275,7 +274,7 @@
           return;
         }
         
-        // Reverse to show latest first
+        // Reverse list so latest first
         const records = [...data.records].reverse();
         
         let recordsHTML = '<div class="records-container">';
@@ -296,7 +295,8 @@
         
       } catch (error) {
         console.error('Error loading data:', error);
-        document.getElementById("records-section").innerHTML = `
+        const recordsSection = document.getElementById("records-section");
+        recordsSection.innerHTML = `
           <div class="error">
             <div style="font-size: 48px; margin-bottom: 15px;">⚠️</div>
             <div><strong>Oops! Something went wrong</strong></div>
@@ -307,49 +307,12 @@
         `;
       }
     }
-    
-    // Load data when page loads
-    loadData();
-    
-    // Add pull-to-refresh functionality
-    let startY = 0;
-    let isPulling = false;
-    
-    document.addEventListener('touchstart', (e) => {
-      startY = e.touches[0].pageY;
-      isPulling = window.pageYOffset === 0;
-    });
-    
-    document.addEventListener('touchmove', (e) => {
-      if (!isPulling) return;
-      
-      const currentY = e.touches[0].pageY;
-      const pullDistance = currentY - startY;
-      
-      if (pullDistance > 100) {
-        // Add visual feedback here if needed
-      }
-    });
-    
-    document.addEventListener('touchend', (e) => {
-      if (!isPulling) return;
-      
-      const endY = e.changedTouches[0].pageY;
-      const pullDistance = endY - startY;
-      
-      if (pullDistance > 100) {
-        // Refresh data
-        document.getElementById("records-section").innerHTML = `
-          <div class="loading">
-            <div class="loading-spinner"></div>
-            <div>Refreshing data...</div>
-          </div>
-        `;
-        loadData();
-      }
-      
-      isPulling = false;
-    });
+
+    // Only load data once when page loads
+    window.addEventListener('load', loadData);
+
+    // Removed all auto/pull-to-refresh logic
+
   </script>
 </body>
 </html>
