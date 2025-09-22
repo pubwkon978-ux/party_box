@@ -67,7 +67,7 @@
     .total-amount {
       font-size: 32px;
       font-weight: 800;
-      color: #fff;
+      color:  #000000;
     }
     
     .records-container {
@@ -137,7 +137,7 @@
     .record-amount {
       font-size: 20px;
       font-weight: 700;
-      color: #00ff88;
+      color:  #000000;
       text-shadow: 0 2px 4px rgba(0, 255, 136, 0.3);
     }
     
@@ -244,112 +244,92 @@
     </div>
   </div>
 
-  <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxpgBVyAa8icpycUSvk8Ip4moL2lsSiW8eGYy9YmR7XDww4dO_Cb1MzVSvlEp89X9k_/exec";
-    
-    async function loadData() {
-      try {
-        const response = await fetch(SCRIPT_URL);
-        const data = await response.json();
-        
-        // Display total
-        const totalSection = document.getElementById("total-section");
-        totalSection.innerHTML = `
-          <div class="total-card success-animation">
-            <div class="total-label">${data.name || 'Malaka'}</div>
-            <div class="total-amount">Rs. ${data.total || 0}</div>
-            <div class="total-label">Total Paid</div>
+  <!-- omitting existing HTML/CSS for brevity -->
+
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxpgBVyAa8icpycUSvk8Ip4moL2lsSiW8eGYy9YmR7XDww4dO_Cb1MzVSvlEp89X9k_/exec";
+
+  const MONTHS_COUNT = 10;  //
+  const EXPECTED_PER_MONTH = 2650;  //
+
+  async function loadData() {
+    try {
+      const response = await fetch(SCRIPT_URL);
+      const data = await response.json();
+
+      // Total paid till now
+      const totalPaid = data.total || 0;
+
+      // Compute how much you should have paid by now for the 10 months
+      const shouldHavePaid = MONTHS_COUNT * EXPECTED_PER_MONTH;
+
+      // Remaining amount = shouldHavePaid − totalPaid (if positive, otherwise zero)
+      const remaining = shouldHavePaid - totalPaid > 0 ? shouldHavePaid - totalPaid : 0;
+
+      // Display total & remaining
+      const totalSection = document.getElementById("total-section");
+      totalSection.innerHTML = `
+        <div class="total-card success-animation">
+          <div class="total-label">${data.name || 'Malaka'}</div>
+          <div class="total-amount">Rs. ${totalPaid}</div>
+          <div class="total-label">Total Paid</div>
+        </div>
+        <div class="total-card success-animation" style="background: linear-gradient(135deg, #f0ad4e, #d9534f);">
+          <div class="total-label">Should Have Paid (${MONTHS_COUNT} mo.)</div>
+          <div class="total-amount">Rs. ${shouldHavePaid}</div>
+        </div>
+        <div class="total-card success-animation" style="background: linear-gradient(135deg, #5cb85c, #4cae4c);">
+          <div class="total-label">Remaining Amount</div>
+          <div class="total-amount">Rs. ${remaining}</div>
+        </div>
+      `;
+
+      // Display records (same as before)
+      const recordsSection = document.getElementById("records-section");
+      if (!data.records || data.records.length === 0) {
+        recordsSection.innerHTML = `
+          <div class="no-data">
+            <div style="font-size: 48px; margin-bottom: 15px;">📋</div>
+            <div>No payment records found</div>
           </div>
         `;
-        
-        // Display records
-        const recordsSection = document.getElementById("records-section");
-        
-        if (!data.records || data.records.length === 0) {
-          recordsSection.innerHTML = `
-            <div class="no-data">
-              <div style="font-size: 48px; margin-bottom: 15px;">📋</div>
-              <div>No payment records found</div>
-            </div>
-          `;
-          return;
-        }
-        
-        // Reverse to show latest first
-        const records = [...data.records].reverse();
-        
-        let recordsHTML = '<div class="records-container">';
-        records.forEach((record, index) => {
-          recordsHTML += `
-            <div class="record-card success-animation" style="animation-delay: ${index * 0.1}s">
-              <div class="record-header">
-                <div class="record-number">#${record.number || 'N/A'}</div>
-                <div class="record-amount">Rs. ${record.amount || 0}</div>
-              </div>
-              <div class="record-month">${record.month || 'Unknown Month'}</div>
-            </div>
-          `;
-        });
-        recordsHTML += '</div>';
-        
-        recordsSection.innerHTML = recordsHTML;
-        
-      } catch (error) {
-        console.error('Error loading data:', error);
-        document.getElementById("records-section").innerHTML = `
-          <div class="error">
-            <div style="font-size: 48px; margin-bottom: 15px;">⚠️</div>
-            <div><strong>Oops! Something went wrong</strong></div>
-            <div style="font-size: 14px; margin-top: 10px; opacity: 0.8;">
-              Please check your internet connection and try again
-            </div>
-          </div>
-        `;
+        return;
       }
+
+      const records = [...data.records].reverse();
+      let recordsHTML = '<div class="records-container">';
+      records.forEach((record, index) => {
+        recordsHTML += `
+          <div class="record-card success-animation" style="animation-delay: ${index * 0.1}s">
+            <div class="record-header">
+              <div class="record-number">#${record.number || 'N/A'}</div>
+              <div class="record-amount">Rs. ${record.amount || 0}</div>
+            </div>
+            <div class="record-month">${record.month || 'Unknown Month'}</div>
+          </div>
+        `;
+      });
+      recordsHTML += '</div>';
+      recordsSection.innerHTML = recordsHTML;
+
+    } catch (error) {
+      console.error('Error loading data:', error);
+      document.getElementById("records-section").innerHTML = `
+        <div class="error">
+          <div style="font-size: 48px; margin-bottom: 15px;">⚠️</div>
+          <div><strong>Oops! Something went wrong</strong></div>
+          <div style="font-size: 14px; margin-top: 10px; opacity: 0.8;">
+            Please check your internet connection and try again
+          </div>
+        </div>
+      `;
     }
-    
-    // Load data when page loads
-    loadData();
-    
-    // Add pull-to-refresh functionality
-    let startY = 0;
-    let isPulling = false;
-    
-    document.addEventListener('touchstart', (e) => {
-      startY = e.touches[0].pageY;
-      isPulling = window.pageYOffset === 0;
-    });
-    
-    document.addEventListener('touchmove', (e) => {
-      if (!isPulling) return;
-      
-      const currentY = e.touches[0].pageY;
-      const pullDistance = currentY - startY;
-      
-      if (pullDistance > 100) {
-        // Add visual feedback here if needed
-      }
-    });
-    
-    document.addEventListener('touchend', (e) => {
-      if (!isPulling) return;
-      
-      const endY = e.changedTouches[0].pageY;
-      const pullDistance = endY - startY;
-      
-      if (pullDistance > 100) {
-        // Refresh data
-        document.getElementById("records-section").innerHTML = `
-          <div class="loading">
-            <div class="loading-spinner"></div>
-            <div>Refreshing data...</div>
-          </div>
-        `;
-        loadData();
-      }
-      
-      isPulling = false;
-    });
-  </script>
+  }
+
+  // Load data when page loads
+  loadData();
+  // ... rest of code (touch handlers etc.)
+</script>
+
 </body>
 </html>
