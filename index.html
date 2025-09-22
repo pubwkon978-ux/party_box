@@ -69,16 +69,28 @@
       background-clip: text;
     }
     
-    .price-card {
-      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-      padding: 18px;
-      border-radius: 20px;
+    .price-selector {
       margin-bottom: 25px;
-      box-shadow: 0 15px 30px rgba(238, 90, 36, 0.4);
+    }
+    
+    .price-options {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+    
+    .price-card {
+      flex: 1;
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+      padding: 12px 8px;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(238, 90, 36, 0.3);
       transform: translateY(0);
-      transition: transform 0.3s ease;
+      transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
     }
     
     .price-card::before {
@@ -93,21 +105,33 @@
     }
     
     .price-card:hover {
-      transform: translateY(-3px);
+      transform: translateY(-2px);
+    }
+    
+    .price-card.active {
+      border-color: #fff;
+      box-shadow: 0 15px 30px rgba(238, 90, 36, 0.5);
     }
     
     .price-label {
-      font-size: 14px;
+      font-size: 11px;
       opacity: 0.9;
-      margin-bottom: 5px;
+      margin-bottom: 3px;
       font-weight: 500;
     }
     
     .price-amount {
-      font-size: 32px;
+      font-size: 18px;
       font-weight: 900;
       color: #fff;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .selected-price {
+      text-align: center;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 20px;
     }
     
     .subtitle {
@@ -202,15 +226,28 @@
     }
     
     .friend-btn:nth-child(1) { animation-delay: 0.1s; }
-    .friend-btn:nth-child(2) { animation-delay: 0.2s; }
-    .friend-btn:nth-child(3) { animation-delay: 0.3s; }
-    .friend-btn:nth-child(4) { animation-delay: 0.4s; }
-    .friend-btn:nth-child(5) { animation-delay: 0.5s; }
-    .friend-btn:nth-child(6) { animation-delay: 0.6s; }
-    .friend-btn:nth-child(7) { animation-delay: 0.7s; }
-    .friend-btn:nth-child(8) { animation-delay: 0.8s; }
-    .friend-btn:nth-child(9) { animation-delay: 0.9s; }
-    .friend-btn:nth-child(10) { animation-delay: 1.0s; }
+    .friend-btn:nth-child(2) { animation-delay: 0.15s; }
+    .friend-btn:nth-child(3) { animation-delay: 0.2s; }
+    .friend-btn:nth-child(4) { animation-delay: 0.25s; }
+    .friend-btn:nth-child(5) { animation-delay: 0.3s; }
+    .friend-btn:nth-child(6) { animation-delay: 0.35s; }
+    .friend-btn:nth-child(7) { animation-delay: 0.4s; }
+    .friend-btn:nth-child(8) { animation-delay: 0.45s; }
+    .friend-btn:nth-child(9) { animation-delay: 0.5s; }
+    .friend-btn:nth-child(10) { animation-delay: 0.55s; }
+    .friend-btn:nth-child(11) { animation-delay: 0.6s; }
+    .friend-btn:nth-child(12) { animation-delay: 0.65s; }
+    .friend-btn:nth-child(13) { animation-delay: 0.7s; }
+    .friend-btn:nth-child(14) { animation-delay: 0.75s; }
+    .friend-btn:nth-child(15) { animation-delay: 0.8s; }
+    .friend-btn:nth-child(16) { animation-delay: 0.85s; }
+    .friend-btn:nth-child(17) { animation-delay: 0.9s; }
+    .friend-btn:nth-child(18) { animation-delay: 0.95s; }
+    .friend-btn:nth-child(19) { animation-delay: 1.0s; }
+    .friend-btn:nth-child(20) { animation-delay: 1.05s; }
+    .friend-btn:nth-child(21) { animation-delay: 1.1s; }
+    .friend-btn:nth-child(22) { animation-delay: 1.15s; }
+    .friend-btn:nth-child(23) { animation-delay: 1.2s; }
     
     @keyframes fadeInUp {
       to {
@@ -247,7 +284,11 @@
       }
       
       .price-amount {
-        font-size: 28px;
+        font-size: 16px;
+      }
+      
+      .price-label {
+        font-size: 10px;
       }
       
       .friends-grid {
@@ -281,7 +322,7 @@
       }
       
       .price-amount {
-        font-size: 26px;
+        font-size: 14px;
       }
       
       .friend-btn {
@@ -299,7 +340,7 @@
       }
       
       .friends-grid {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 8px;
       }
       
@@ -320,36 +361,39 @@
   <div class="container">
     <div class="header header-animation">
       <h1 class="title">🎉 Party Box Friends</h1>
-      <div class="price-card">
-        <div class="price-label">Total Party Box Price</div>
-        <div class="price-amount">Rs. 25,000</div>
+      <div class="price-selector">
+        <div class="price-options">
+          <div class="price-card active" onclick="selectPrice('26500', this)">
+            <div class="price-label">NDR 815</div>
+            <div class="price-amount">Rs. 26,500</div>
+          </div>
+          <div class="price-card" onclick="selectPrice('29000', this)">
+            <div class="price-label">NDR 810</div>
+            <div class="price-amount">Rs. 29,000</div>
+          </div>
+            <div class="price-card" onclick="selectPrice('29000', this)">
+            <div class="price-label">RAVO 888</div>
+            <div class="price-amount">Rs. 31,000</div>
+          </div>
+          <div class="price-card" onclick="selectPrice('31000', this)">
+            <div class="price-label">BRUDO</div>
+            <div class="price-amount">Rs. 26,500</div>
+          </div>
+        </div>
+        <div class="selected-price">Selected: Rs. <span id="currentPrice">26,500</span></div>
       </div>
       <p class="subtitle">Select a friend to view their payments</p>
     </div>
     
     <div class="friends-grid">
-      <a href="chathuranga.html" class="friend-btn">
-        <div class="friend-icon">👨‍💼</div>
-        <div class="friend-name">Chathuranga</div>
-      </a>
-      
-      <a href="dilum.html" class="friend-btn">
-        <div class="friend-icon">🧑‍</div>
-        <div class="friend-name">Dilum</div>
-      </a>
       
       <a href="thilini.html" class="friend-btn">
         <div class="friend-icon">👩‍🎨</div>
         <div class="friend-name">Thilini</div>
       </a>
       
-      <a href="malshani.html" class="friend-btn">
-        <div class="friend-icon">👩‍🔬</div>
-        <div class="friend-name">Malshani</div>
-      </a>
-      
       <a href="theshala.html" class="friend-btn">
-        <div class="friend-icon">👩‍💼‍</div>
+        <div class="friend-icon">👩‍💼</div>
         <div class="friend-name">Theshala</div>
       </a>
       
@@ -358,18 +402,13 @@
         <div class="friend-name">Sandaru</div>
       </a>
       
-      <a href="savindu.html" class="friend-btn">
-        <div class="friend-icon">🧑‍</div>
-        <div class="friend-name">Savindu</div>
-      </a>
-      
       <a href="gayan.html" class="friend-btn">
-        <div class="friend-icon">👨‍</div>
+        <div class="friend-icon">👨‍🎯</div>
         <div class="friend-name">Gayan</div>
       </a>
       
       <a href="malaka.html" class="friend-btn">
-        <div class="friend-icon">🧑‍</div>
+        <div class="friend-icon">🧑‍🎨</div>
         <div class="friend-name">Malaka</div>
       </a>
       
@@ -377,12 +416,91 @@
         <div class="friend-icon">👩‍💼</div>
         <div class="friend-name">Ishini</div>
       </a>
+      
+      <a href="thilina.html" class="friend-btn">
+        <div class="friend-icon">👨‍🔧</div>
+        <div class="friend-name">Thilina</div>
+      </a>
+      
+      <a href="chamindu.html" class="friend-btn">
+        <div class="friend-icon">👨‍⚕️</div>
+        <div class="friend-name">Chamindu</div>
+      </a>
+      
+      <a href="amalki.html" class="friend-btn">
+        <div class="friend-icon">👩‍🎭</div>
+        <div class="friend-name">Amalki</div>
+      </a>
+      
+      <a href="anushika.html" class="friend-btn">
+        <div class="friend-icon">👩‍🌾</div>
+        <div class="friend-name">Anushika</div>
+      </a>
+      
+      <a href="chamod.html" class="friend-btn">
+        <div class="friend-icon">👨‍🏫</div>
+        <div class="friend-name">Chamod</div>
+      </a>
+      
+      <a href="danushka.html" class="friend-btn">
+        <div class="friend-icon">👨‍🎸</div>
+        <div class="friend-name">Danushka</div>
+      </a>
+      
+      <a href="tharindu.html" class="friend-btn">
+        <div class="friend-icon">👨‍🔬</div>
+        <div class="friend-name">Tharindu</div>
+      </a>
+      
+      <a href="lashan.html" class="friend-btn">
+        <div class="friend-icon">👨‍✈️</div>
+        <div class="friend-name">Lashan</div>
+      </a>
+      
+      <a href="sumudu.html" class="friend-btn">
+        <div class="friend-icon">👩‍🍳</div>
+        <div class="friend-name">Sumudu</div>
+      </a>
+      
+      <a href="rajitha.html" class="friend-btn">
+        <div class="friend-icon">👨‍🎨</div>
+        <div class="friend-name">Rajitha</div>
+      </a>
+      
+      <a href="rasika.html" class="friend-btn">
+        <div class="friend-icon">👨‍💻</div>
+        <div class="friend-name">Rasika</div>
+      </a>
+      
+      <a href="sajeewa.html" class="friend-btn">
+        <div class="friend-icon">👨‍🌱</div>
+        <div class="friend-name">Sajeewa</div>
+      </a>
+      
+      <a href="sewwandi.html" class="friend-btn">
+        <div class="friend-icon">👩‍⚖️</div>
+        <div class="friend-name">Sewwandi</div>
+      </a>
     </div>
     
     <div class="footer">
       <p class="footer-text">Track everyone's contributions to the party!</p>
     </div>
   </div>
-</body>
 
+  <script>
+    function selectPrice(price, element) {
+      // Remove active class from all price cards
+      document.querySelectorAll('.price-card').forEach(card => {
+        card.classList.remove('active');
+      });
+      
+      // Add active class to selected card
+      element.classList.add('active');
+      
+      // Update the displayed price
+      document.getElementById('currentPrice').textContent = price.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+  </script>
+</body>
 </html>
