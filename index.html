@@ -13,7 +13,7 @@
     
     body {
       font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      background: url("12345.jpg") no-repeat center center/cover;
       min-height: 100vh;
       padding: 20px 10px;
       color: #fff;
@@ -21,494 +21,134 @@
     }
     
     .container {
-      max-width: 450px;
+      max-width: 480px;
       margin: 0 auto;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(20px);
-      border-radius: 30px;
-      padding: 30px 25px;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .container::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
-      animation: shimmer 3s infinite;
-      pointer-events: none;
-    }
-    
-    @keyframes shimmer {
-      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(12px);
+      border-radius: 25px;
+      padding: 25px 20px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
     }
     
     .header {
       text-align: center;
-      margin-bottom: 30px;
-      position: relative;
-      z-index: 1;
-    }
-    
-    .title {
-      font-size: 28px;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 15px;
-      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-      background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .price-selector {
-      margin-bottom: 25px;
-    }
-    
-    .price-options {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 15px;
-    }
-    
-    .price-card {
-      flex: 1;
-      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-      padding: 12px 8px;
-      border-radius: 15px;
-      box-shadow: 0 10px 20px rgba(238, 90, 36, 0.3);
-      transform: translateY(0);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      border: 2px solid transparent;
-    }
-    
-    .price-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
-      pointer-events: none;
-    }
-    
-    .price-card:hover {
-      transform: translateY(-2px);
-    }
-    
-    .price-card.active {
-      border-color: #fff;
-      box-shadow: 0 15px 30px rgba(238, 90, 36, 0.5);
-    }
-    
-    .price-label {
-      font-size: 11px;
-      opacity: 0.9;
-      margin-bottom: 3px;
-      font-weight: 500;
-    }
-    
-    .price-amount {
-      font-size: 18px;
-      font-weight: 900;
-      color: #fff;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-    
-    .selected-price {
-      text-align: center;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.8);
       margin-bottom: 20px;
     }
     
-    .subtitle {
-      font-size: 16px;
-      color: rgba(255, 255, 255, 0.8);
+    .title {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .group {
       margin-bottom: 30px;
-      font-weight: 400;
+    }
+    
+    .group h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      text-align: center;
+      color: #ffd369;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
     
     .friends-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
-      margin-bottom: 20px;
     }
     
     .friend-btn {
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px 15px;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 15px;
       border: 1px solid rgba(255, 255, 255, 0.2);
       color: #fff;
       text-decoration: none;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 600;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      position: relative;
-      overflow: hidden;
-      min-height: 100px;
+      transition: 0.3s;
       cursor: pointer;
     }
     
-    .friend-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s ease;
-    }
-    
-    .friend-btn:hover::before {
-      left: 100%;
-    }
-    
     .friend-btn:hover {
-      transform: translateY(-5px) scale(1.05);
       background: rgba(255, 255, 255, 0.25);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      transform: scale(1.05);
     }
-    
-    .friend-btn:active {
-      transform: translateY(-2px) scale(1.02);
-    }
-    
-    .friend-icon {
-      font-size: 28px;
-      margin-bottom: 8px;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-    }
-    
-    .friend-name {
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      letter-spacing: 0.5px;
-    }
-    
+
     .footer {
       text-align: center;
-      margin-top: 25px;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    .footer-text {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.6);
-      font-weight: 400;
-    }
-    
-    /* Animations */
-    .friend-btn {
-      animation: fadeInUp 0.6s ease-out forwards;
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    
-    .friend-btn:nth-child(1) { animation-delay: 0.1s; }
-    .friend-btn:nth-child(2) { animation-delay: 0.15s; }
-    .friend-btn:nth-child(3) { animation-delay: 0.2s; }
-    .friend-btn:nth-child(4) { animation-delay: 0.25s; }
-    .friend-btn:nth-child(5) { animation-delay: 0.3s; }
-    .friend-btn:nth-child(6) { animation-delay: 0.35s; }
-    .friend-btn:nth-child(7) { animation-delay: 0.4s; }
-    .friend-btn:nth-child(8) { animation-delay: 0.45s; }
-    .friend-btn:nth-child(9) { animation-delay: 0.5s; }
-    .friend-btn:nth-child(10) { animation-delay: 0.55s; }
-    .friend-btn:nth-child(11) { animation-delay: 0.6s; }
-    .friend-btn:nth-child(12) { animation-delay: 0.65s; }
-    .friend-btn:nth-child(13) { animation-delay: 0.7s; }
-    .friend-btn:nth-child(14) { animation-delay: 0.75s; }
-    .friend-btn:nth-child(15) { animation-delay: 0.8s; }
-    .friend-btn:nth-child(16) { animation-delay: 0.85s; }
-    .friend-btn:nth-child(17) { animation-delay: 0.9s; }
-    .friend-btn:nth-child(18) { animation-delay: 0.95s; }
-    .friend-btn:nth-child(19) { animation-delay: 1.0s; }
-    .friend-btn:nth-child(20) { animation-delay: 1.05s; }
-    .friend-btn:nth-child(21) { animation-delay: 1.1s; }
-    .friend-btn:nth-child(22) { animation-delay: 1.15s; }
-    .friend-btn:nth-child(23) { animation-delay: 1.2s; }
-    
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    .header-animation {
-      animation: slideDown 0.8s ease-out;
-    }
-    
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    /* Mobile optimizations */
-    @media (max-width: 480px) {
-      .container {
-        margin: 10px;
-        padding: 25px 20px;
-        border-radius: 25px;
-      }
-      
-      .title {
-        font-size: 24px;
-      }
-      
-      .price-amount {
-        font-size: 16px;
-      }
-      
-      .price-label {
-        font-size: 10px;
-      }
-      
-      .friends-grid {
-        gap: 10px;
-      }
-      
-      .friend-btn {
-        padding: 18px 12px;
-        min-height: 90px;
-        font-size: 15px;
-      }
-      
-      .friend-icon {
-        font-size: 24px;
-        margin-bottom: 6px;
-      }
-    }
-    
-    /* Extra small screens */
-    @media (max-width: 360px) {
-      body {
-        padding: 15px 8px;
-      }
-      
-      .container {
-        padding: 20px 15px;
-      }
-      
-      .title {
-        font-size: 22px;
-      }
-      
-      .price-amount {
-        font-size: 14px;
-      }
-      
-      .friend-btn {
-        padding: 15px 10px;
-        min-height: 85px;
-        font-size: 14px;
-      }
-    }
-    
-    /* Landscape mode on mobile */
-    @media (max-height: 600px) and (orientation: landscape) {
-      .container {
-        max-width: 90%;
-        padding: 20px;
-      }
-      
-      .friends-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 8px;
-      }
-      
-      .friend-btn {
-        min-height: 70px;
-        padding: 12px 8px;
-        font-size: 13px;
-      }
-      
-      .friend-icon {
-        font-size: 20px;
-        margin-bottom: 4px;
-      }
+      margin-top: 20px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="header header-animation">
-      <h1 class="title">🎉 Party Box Friends</h1>
-      <div class="price-selector">
-        <div class="price-options">
-          <div class="price-card active" onclick="selectPrice('27000', this)">
-            <div class="price-label">NDR 815</div>
-            <div class="price-amount">Rs. 27,000</div>
-          </div>
-          <div class="price-card" onclick="selectPrice('29500', this)">
-            <div class="price-label">NDR 810</div>
-            <div class="price-amount">Rs. 29,500</div>
-          </div>
-            <div class="price-card" onclick="selectPrice('31500', this)">
-            <div class="price-label">RAVO 888</div>
-            <div class="price-amount">Rs. 31,500</div>
-          </div>
-          <div class="price-card" onclick="selectPrice('26500', this)">
-            <div class="price-label">BRUDO</div>
-            <div class="price-amount">Rs. 26,500</div>
-          </div>
-        </div>
-        <div class="selected-price">Selected: Rs. <span id="currentPrice">26,500</span></div>
-      </div>
-      <p class="subtitle">Select a friend to view their payments</p>
+    <div class="header">
+      <h1 class="title">🎉 Party Box Groups</h1>
     </div>
-    
-    <div class="friends-grid">
-      
-      <a href="thilini.html" class="friend-btn">
-        <div class="friend-icon">👩‍🎨</div>
-        <div class="friend-name">Thilini</div>
-      </a>
-      
-      <a href="theshala.html" class="friend-btn">
-        <div class="friend-icon">👩‍💼</div>
-        <div class="friend-name">Theshala</div>
-      </a>
-      
-      <a href="sandaru.html" class="friend-btn">
-        <div class="friend-icon">👨‍🚀</div>
-        <div class="friend-name">Sandaru</div>
-      </a>
-      
-      <a href="gayan.html" class="friend-btn">
-        <div class="friend-icon">👨‍🎯</div>
-        <div class="friend-name">Gayan</div>
-      </a>
-      
-      <a href="malaka.html" class="friend-btn">
-        <div class="friend-icon">🧑‍🎨</div>
-        <div class="friend-name">Malaka</div>
-      </a>
-      
-      <a href="ishini.html" class="friend-btn">
-        <div class="friend-icon">👩‍💼</div>
-        <div class="friend-name">Ishini</div>
-      </a>
-      
-      <a href="thilina.html" class="friend-btn">
-        <div class="friend-icon">👨‍🔧</div>
-        <div class="friend-name">Thilina</div>
-      </a>
-      
-      <a href="chamindu.html" class="friend-btn">
-        <div class="friend-icon">👨‍⚕️</div>
-        <div class="friend-name">Chamindu</div>
-      </a>
-      
-      <a href="amalki.html" class="friend-btn">
-        <div class="friend-icon">👩‍🎭</div>
-        <div class="friend-name">Amalki</div>
-      </a>
-      
-      <a href="anushika.html" class="friend-btn">
-        <div class="friend-icon">👩‍🌾</div>
-        <div class="friend-name">Anushika</div>
-      </a>
-      
-      <a href="chamod.html" class="friend-btn">
-        <div class="friend-icon">👨‍🏫</div>
-        <div class="friend-name">Chamod</div>
-      </a>
-      
-      <a href="danushka.html" class="friend-btn">
-        <div class="friend-icon">👨‍🎸</div>
-        <div class="friend-name">Danushka</div>
-      </a>
-      
-      <a href="tharindu.html" class="friend-btn">
-        <div class="friend-icon">👨‍🔬</div>
-        <div class="friend-name">Tharindu</div>
-      </a>
-      
-      <a href="lashan.html" class="friend-btn">
-        <div class="friend-icon">👨‍✈️</div>
-        <div class="friend-name">Lashan</div>
-      </a>
-      
-      <a href="sumudu.html" class="friend-btn">
-        <div class="friend-icon">👩‍🍳</div>
-        <div class="friend-name">Sumudu</div>
-      </a>
-      
-      <a href="rajitha.html" class="friend-btn">
-        <div class="friend-icon">👨‍🎨</div>
-        <div class="friend-name">Rajitha</div>
-      </a>
-      
-      <a href="rasika.html" class="friend-btn">
-        <div class="friend-icon">👨‍💻</div>
-        <div class="friend-name">Rasika</div>
-      </a>
-      
-      <a href="sajeewa.html" class="friend-btn">
-        <div class="friend-icon">👨‍🌱</div>
-        <div class="friend-name">Sajeewa</div>
-      </a>
-      
-      <a href="sewwandi.html" class="friend-btn">
-        <div class="friend-icon">👩‍⚖️</div>
-        <div class="friend-name">Sewwandi</div>
-      </a>
 
-      <a href="chathurika.html" class="friend-btn">
-        <div class="friend-icon">👩‍⚖️</div>
-        <div class="friend-name">Chathurika</div>
-      </a>
+    <!-- Group 1: NDR 815 -->
+    <div class="group">
+      <h2>NDR 815</h2>
+      <div class="friends-grid">
+        <a href="amalki.html" class="friend-btn">Amalki</a>
+        <a href="ishini.html" class="friend-btn">Ishini</a>
+        <a href="chamod.html" class="friend-btn">Chamod</a>
+        <a href="gayan.html" class="friend-btn">Gayan</a>
+        <a href="malaka.html" class="friend-btn">Malaka</a>
+        <a href="sajeewa.html" class="friend-btn">Sajeewa</a>
+        <a href="thiwanka.html" class="friend-btn">Thiwanka</a>
+      </div>
     </div>
-    
+
+    <!-- Group 2: NDR 810 -->
+    <div class="group">
+      <h2>NDR 810</h2>
+      <div class="friends-grid">
+        <a href="rajitha.html" class="friend-btn">Rajitha</a>
+      </div>
+    </div>
+
+    <!-- Group 3: RAVO -->
+    <div class="group">
+      <h2>RAVO 888</h2>
+      <div class="friends-grid">
+        <a href="chamindu.html" class="friend-btn">Chamindu</a>
+        <a href="lashan.html" class="friend-btn">Lashan</a>
+        <a href="sumudu.html" class="friend-btn">Sumudu</a>
+        <a href="danushka.html" class="friend-btn">Danushka</a>
+        <a href="theshala.html" class="friend-btn">Theshala</a>
+        <a href="tharindu.html" class="friend-btn">Tharindu</a>
+      </div>
+    </div>
+
+    <!-- Group 4: BRUDO -->
+    <div class="group">
+      <h2>BRUDO</h2>
+      <div class="friends-grid">
+        <a href="thilini.html" class="friend-btn">Thilini</a>
+        <a href="geethika.html" class="friend-btn">Geethika</a>
+        <a href="rasika.html" class="friend-btn">Rasika</a>
+        <a href="chathurika.html" class="friend-btn">Chathurika</a>
+        <a href="anushika.html" class="friend-btn">Anushika</a>
+        <a href="sandaru.html" class="friend-btn">Sandaru</a>
+      </div>
+    </div>
+
     <div class="footer">
-      <p class="footer-text">Track everyone's contributions to the party!</p>
+      Track everyone's contributions to the party!
     </div>
   </div>
-
-  <script>
-    function selectPrice(price, element) {
-      // Remove active class from all price cards
-      document.querySelectorAll('.price-card').forEach(card => {
-        card.classList.remove('active');
-      });
-      
-      // Add active class to selected card
-      element.classList.add('active');
-      
-      // Update the displayed price
-      document.getElementById('currentPrice').textContent = price.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    }
-  </script>
 </body>
 </html>
-
-
-
